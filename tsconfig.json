@@ -25,14 +25,14 @@
 
       "@hooks/*": ["src/hooks/*"],
 
-      "@pages/*": ["src/pages/*"],
-
       "@styles/*": ["src/styles/*"],
 
       "@a-icons/*": ["src/assets/icons/*"],
       "@a-images/*": ["src/assets/images/*"],
 
       "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/pages/*"],
     },
     "incremental": true
   },
