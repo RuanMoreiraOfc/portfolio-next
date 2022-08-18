@@ -1,6 +1,12 @@
 import type { GetUniquesFromPattern } from '@~types/getUniquesFromPattern';
 
-import { isFunction, isRegExp, isUndefined } from 'util';
+// import { isFunction, isRegExp, isUndefined } from 'util';
+const is = (x: any, str: string) =>
+  Object.prototype.toString.call(x).includes(str);
+
+const isFunction = (x: any): x is Function => is(x, 'Function');
+const isRegExp = (x: any): x is RegExp => is(x, 'RegExp');
+const isUndefined = (x: any): x is undefined => is(x, 'Undefined');
 
 export { r };
 export type { Flags };
