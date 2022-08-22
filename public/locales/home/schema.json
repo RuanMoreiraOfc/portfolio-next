@@ -5,7 +5,8 @@
     "$schema",
     "page",
     "partials",
-    "intro"
+    "intro",
+    "aboutMe"
   ],
   "properties": {
     "$schema": {
@@ -65,6 +66,61 @@
         },
         "imageAlt": {
           "type": "string"
+        }
+      }
+    },
+    "aboutMe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "topic",
+        "imageAlt",
+        "paragraph"
+      ],
+      "properties": {
+        "topic": {
+          "type": "string"
+        },
+        "imageAlt": {
+          "type": "string"
+        },
+        "paragraph": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "content",
+            "tags"
+          ],
+          "properties": {
+            "content": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "abbr"
+              ],
+              "properties": {
+                "abbr": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "lang",
+                    "title"
+                  ],
+                  "properties": {
+                    "lang": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

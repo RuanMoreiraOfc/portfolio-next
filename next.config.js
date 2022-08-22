@@ -8,7 +8,7 @@ const nextConfig = {
     localeDetection: false,
   },
   images: {
-    domains: ['images.pexels.com'],
+    domains: ['drive.google.com', 'images.pexels.com'],
   },
 };
 

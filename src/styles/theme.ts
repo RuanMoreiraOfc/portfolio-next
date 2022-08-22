@@ -160,6 +160,20 @@ const theme = extendTheme({
           scrollSnapAlign: 'var(--snap-at, start)',
         },
       },
+      '[data-limited-box]': {
+        w: 'full !important',
+        minW: 'unset !important',
+        maxW: 'unset !important',
+
+        "&[data-limited-box='expanded']": {
+          mx: 'auto',
+          px: 'up-to-max-content',
+        },
+        "&[data-limited-box='squashed']": {
+          mx: 'up-to-max-content',
+          px: 'auto',
+        },
+      },
     },
   },
 } as DefaultThemeType);
