@@ -2,11 +2,41 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "$schema"
+    "$schema",
+    "partials"
   ],
   "properties": {
     "$schema": {
       "type": "string"
+    },
+    "partials": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contactBar"
+      ],
+      "properties": {
+        "contactBar": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "btnSocialMediaTitle",
+            "btnEmailTitle",
+            "btnResume"
+          ],
+          "properties": {
+            "btnSocialMediaTitle": {
+              "type": "string"
+            },
+            "btnEmailTitle": {
+              "type": "string"
+            },
+            "btnResume": {
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   }
 }

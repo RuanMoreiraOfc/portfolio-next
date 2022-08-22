@@ -1,3 +1,10 @@
 {
-  "$schema": "./schema.json"
+  "$schema": "./schema.json",
+  "partials": {
+    "contactBar": {
+      "btnSocialMediaTitle": "Access my",
+      "btnEmailTitle": "Send me an",
+      "btnResume": "Download CV"
+    }
+  }
 }
