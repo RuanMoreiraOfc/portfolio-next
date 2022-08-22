@@ -3,8 +3,11 @@ import { translate } from '@lib/translatePage';
 import { isNull } from 'util';
 import type { NextPage, GetStaticProps } from 'next';
 
+import { useRef } from 'react';
+
 import { Fragment } from 'react';
 import Head from 'next/head';
+import { Box } from '@chakra-ui/react';
 
 import type { HomeLayoutGroup } from '@layouts/home/abstract/layout';
 import Intro from '@layouts/home/Intro';
@@ -20,6 +23,10 @@ type HomeStaticProps = {
 type HomeProps = {} & HomeStaticProps;
 
 function Home({ translation }: HomeProps) {
+   const pageRef = useRef<HTMLDivElement>(null);
+
+   // ***
+
    const pageTitle = `${translation.page.title} | Ruan Moreira`;
 
    return (
@@ -28,12 +35,21 @@ function Home({ translation }: HomeProps) {
             <title>{pageTitle}</title>
          </Head>
 
-         <Intro
-            translation={{
-               ...translation.intro,
-               contactBar: translation.partials.contactBar,
-            }}
-         />
+         <Box //
+            ref={pageRef}
+            as='main'
+            data-crop='viewport'
+            data-snapped-scroll='y'
+         >
+            <Intro
+               data-snapped-item
+               pageRef={pageRef}
+               translation={{
+                  ...translation.intro,
+                  contactBar: translation.partials.contactBar,
+               }}
+            />
+         </Box>
       </Fragment>
    );
 }

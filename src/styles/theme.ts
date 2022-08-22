@@ -134,6 +134,32 @@ const theme = extendTheme({
           color: 'transparent',
         },
       },
+      "[data-crop='viewport']": {
+        w: '100vw',
+        h: '100vh',
+      },
+      '[data-snapped-scroll]': {
+        scrollBehavior: 'smooth',
+
+        "&[data-snapped-scroll='x']": {
+          overflowX: 'scroll',
+          scrollSnapType: 'x mandatory',
+        },
+        "&[data-snapped-scroll='y']": {
+          overflowY: 'scroll',
+          scrollSnapType: { base: 'y proximity', lg: 'y mandatory' },
+        },
+
+        msOverflowStyle: 'none',
+        scrollbarWidth: 'none',
+        '::-webkit-scrollbar': {
+          display: 'none',
+        },
+
+        '&  [data-snapped-item]': {
+          scrollSnapAlign: 'var(--snap-at, start)',
+        },
+      },
     },
   },
 } as DefaultThemeType);
