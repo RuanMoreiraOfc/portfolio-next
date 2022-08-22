@@ -3,11 +3,25 @@
   "additionalProperties": false,
   "required": [
     "$schema",
-    "partials"
+    "page",
+    "partials",
+    "intro"
   ],
   "properties": {
     "$schema": {
       "type": "string"
+    },
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        }
+      }
     },
     "partials": {
       "type": "object",
@@ -35,6 +49,22 @@
               "type": "string"
             }
           }
+        }
+      }
+    },
+    "intro": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expertise",
+        "imageAlt"
+      ],
+      "properties": {
+        "expertise": {
+          "type": "string"
+        },
+        "imageAlt": {
+          "type": "string"
         }
       }
     }

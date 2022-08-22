@@ -7,6 +7,9 @@ const nextConfig = {
     defaultLocale: 'fallback-en',
     localeDetection: false,
   },
+  images: {
+    domains: ['images.pexels.com'],
+  },
 };
 
 if (process.env.DOMAIN_PARTS_COUNT === undefined) {

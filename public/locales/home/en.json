@@ -1,10 +1,17 @@
 {
   "$schema": "./schema.json",
+  "page": {
+    "title": "Home"
+  },
   "partials": {
     "contactBar": {
       "btnSocialMediaTitle": "Access my",
       "btnEmailTitle": "Send me an",
       "btnResume": "Download CV"
     }
+  },
+  "intro": {
+    "expertise": "Fullstack Developer",
+    "imageAlt": "Standing man at peak of mountain by Jaime Reimer"
   }
 }
