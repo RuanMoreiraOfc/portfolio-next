@@ -6,7 +6,8 @@
     "page",
     "partials",
     "intro",
-    "aboutMe"
+    "aboutMe",
+    "skills"
   ],
   "properties": {
     "$schema": {
@@ -119,6 +120,62 @@
                   }
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "skills": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "topic",
+        "btnToggle",
+        "table"
+      ],
+      "properties": {
+        "topic": {
+          "type": "string"
+        },
+        "btnToggle": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "content",
+            "active",
+            "inactive"
+          ],
+          "properties": {
+            "content": {
+              "type": "string"
+            },
+            "active": {
+              "type": "string"
+            },
+            "inactive": {
+              "type": "string"
+            }
+          }
+        },
+        "table": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "headers",
+            "title"
+          ],
+          "properties": {
+            "headers": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "uniqueItems": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "title": {
+              "type": "string"
             }
           }
         }

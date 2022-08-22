@@ -12,6 +12,7 @@ import { Box } from '@chakra-ui/react';
 import type { HomeLayoutGroup } from '@layouts/home/abstract/layout';
 import Intro from '@layouts/home/Intro';
 import AboutMe from '@layouts/home/AboutMe';
+import Skills from '@layouts/home/Skills';
 
 export default Home as NextPage;
 export { getStaticProps };
@@ -53,6 +54,10 @@ function Home({ translation }: HomeProps) {
             <AboutMe //
                data-snapped-item
                translation={translation.aboutMe}
+            />
+            <Skills //
+               data-snapped-item
+               translation={translation.skills}
             />
          </Box>
       </Fragment>

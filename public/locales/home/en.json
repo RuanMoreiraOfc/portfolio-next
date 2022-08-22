@@ -26,5 +26,22 @@
         }
       }
     }
+  },
+  "skills": {
+    "topic": "What is my stack?",
+    "btnToggle": {
+      "content": "Show",
+      "active": "Less",
+      "inactive": "All"
+    },
+    "table": {
+      "headers": [
+        "Mood to work with",
+        "I'd use in necessary cases",
+        "I'd use in simple projects",
+        "All of my projects have at least one of these"
+      ],
+      "title": "It was used on this project"
+    }
   }
 }
