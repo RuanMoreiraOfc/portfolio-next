@@ -85,6 +85,20 @@ const theme = extendTheme({
     heading: 'sans-serif',
     body: 'sans-serif',
   },
+  semanticTokens: {
+    colors: {
+      base: 'neutral.100',
+    },
+    sizes: {
+      'max-page': '3xl',
+      header: '28',
+    },
+    space: {
+      base: '4rem',
+      'mobile-base': '2rem',
+      'up-to-max-content': `max(var(--chakra-space-mobile-base), (100vw - var(--chakra-sizes-max-page) - var(--chakra-space-base)) / 2)`,
+    },
+  },
   styles: {
     global: {
       '*': {
@@ -109,8 +123,8 @@ const theme = extendTheme({
         cursor: 'pointer',
       },
       body: {
-        bg: 'neutral.100',
         color: 'neutral.500',
+        bgColor: 'base',
       },
       'nav, ul': {
         display: 'contents',
