@@ -9,4 +9,8 @@ const nextConfig = {
   },
 };
 
+if (process.env.DOMAIN_PARTS_COUNT === undefined) {
+  throw new Error(`\`DOMAIN_PARTS_COUNT\` was not defined!`);
+}
+
 module.exports = nextConfig;
