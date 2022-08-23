@@ -23,6 +23,7 @@ import AboutMe from '@layouts/home/AboutMe';
 import Skills from '@layouts/home/Skills';
 import type { ProjectsProps } from '@layouts/home/Projects';
 import Projects from '@layouts/home/Projects';
+import ContactMe from '@layouts/home/ContactMe';
 
 export default Home as NextPage;
 export { getStaticProps };
@@ -76,6 +77,14 @@ function Home({ projects, translation }: HomeProps) {
                data-snapped-item
                projects={projects}
                translation={translation.projects}
+            />
+            <ContactMe //
+               data-snapped-item
+               pageRef={pageRef}
+               translation={{
+                  ...translation.contactMe,
+                  contactBar: translation.partials.contactBar,
+               }}
             />
          </Box>
       </Fragment>

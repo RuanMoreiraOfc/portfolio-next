@@ -63,5 +63,16 @@
       "btnGoToCode": "Code",
       "btnGoToDemo": "Demo"
     }
+  },
+  "contactMe": {
+    "topic": "Contact me",
+    "paragraph": {
+      "content": "Now, you've learned a little about me, but don't let it end here, remember to get in touch with one of these alternatives down below or access <1>my blog</1>!",
+      "tags": {
+        "a": {
+          "href": "/blog"
+        }
+      }
+    }
   }
 }

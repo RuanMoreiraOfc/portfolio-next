@@ -8,7 +8,8 @@
     "intro",
     "aboutMe",
     "skills",
-    "projects"
+    "projects",
+    "contactMe"
   ],
   "properties": {
     "$schema": {
@@ -257,6 +258,53 @@
             },
             "btnGoToDemo": {
               "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "contactMe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "topic",
+        "paragraph"
+      ],
+      "properties": {
+        "topic": {
+          "type": "string"
+        },
+        "paragraph": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "content",
+            "tags"
+          ],
+          "properties": {
+            "content": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "a"
+              ],
+              "properties": {
+                "a": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "href"
+                  ],
+                  "properties": {
+                    "href": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
             }
           }
         }
