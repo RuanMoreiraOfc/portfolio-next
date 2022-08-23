@@ -134,6 +134,32 @@ const theme = extendTheme({
           color: 'transparent',
         },
       },
+      '.chakra-modal__content-container': {
+        px: { base: 'mobile-base', md: 'unset' },
+      },
+      "[data-scrollbar='thin'], .chakra-modal__content-container": {
+        '--thumb-color': 'var(--chakra-colors-neutral-500)',
+        '--track-color': 'var(--chakra-colors-neutral-400)',
+
+        scrollBehavior: 'smooth',
+
+        msScrollbarArrowColor: 'transparent',
+        msScrollbarFaceColor: 'var(--thumb-color)',
+        msScrollbarHighlightColor: 'var(--track-color)',
+
+        scrollbarWidth: 'thin',
+        scrollbarColor: 'var(--thumb-color) var(--track-color)',
+
+        '&::-webkit-scrollbar': {
+          w: '8px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: 'var(--thumb-color)',
+        },
+        '&::-webkit-scrollbar-track': {
+          background: 'var(--track-color)',
+        },
+      },
       "[data-crop='viewport']": {
         w: '100vw',
         h: '100vh',
