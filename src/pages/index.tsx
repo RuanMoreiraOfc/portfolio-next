@@ -11,13 +11,14 @@ import { getPortfolioRepos } from '@services/github/queries/getPortfolioRepos';
 import { isNull } from 'util';
 import type { NextPage, GetStaticProps } from 'next';
 
-import { useRef } from 'react';
+import { useId, useRef } from 'react';
 
 import { Fragment } from 'react';
 import Head from 'next/head';
 import { Box } from '@chakra-ui/react';
 
 import type { HomeLayoutGroup } from '@layouts/home/abstract/layout';
+import HeaderLandingPage from '@layouts/home/HeaderLandingPage';
 import Intro from '@layouts/home/Intro';
 import AboutMe from '@layouts/home/AboutMe';
 import Skills from '@layouts/home/Skills';
@@ -39,17 +40,25 @@ type HomeStaticProps = {
 type HomeProps = {} & HomeStaticProps;
 
 function Home({ projects, translation }: HomeProps) {
+   const id = useId();
    const pageRef = useRef<HTMLDivElement>(null);
 
    // ***
 
    const pageTitle = `${translation.page.title} | Ruan Moreira`;
+   const topicIds = translation.navigator.topics.map((e) => e.slug);
 
    return (
       <Fragment>
          <Head>
             <title>{pageTitle}</title>
          </Head>
+
+         <HeaderLandingPage
+            id={id}
+            pageRef={pageRef}
+            translation={translation.navigator}
+         />
 
          <Box //
             ref={pageRef}
@@ -58,6 +67,7 @@ function Home({ projects, translation }: HomeProps) {
             data-snapped-scroll='y'
          >
             <Intro
+               id={topicIds[0]}
                data-snapped-item
                pageRef={pageRef}
                translation={{
@@ -66,19 +76,23 @@ function Home({ projects, translation }: HomeProps) {
                }}
             />
             <AboutMe //
+               id={topicIds[1]}
                data-snapped-item
                translation={translation.aboutMe}
             />
             <Skills //
+               id={topicIds[2]}
                data-snapped-item
                translation={translation.skills}
             />
             <Projects
+               id={topicIds[3]}
                data-snapped-item
                projects={projects}
                translation={translation.projects}
             />
             <ContactMe //
+               id={topicIds[4]}
                data-snapped-item
                pageRef={pageRef}
                translation={{

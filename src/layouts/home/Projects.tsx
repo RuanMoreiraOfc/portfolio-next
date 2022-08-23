@@ -22,12 +22,14 @@ export default Projects;
 export type { ProjectsProps };
 
 type ProjectsProps = {
+   id: HomeLayout<'projects'>['id'];
    projects: Project[];
    translation: ProjectCardProps['translation'] &
       HomeLayout<'projects'>['translation'];
 };
 
 function Projects({
+   id,
    projects,
    translation: {
       tags: {
@@ -132,6 +134,7 @@ function Projects({
    return (
       <Grid //
          as='section'
+         id={id}
          data-limited-box='expanded'
          minH='100vh'
          pt='32'

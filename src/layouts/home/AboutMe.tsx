@@ -19,10 +19,11 @@ const myAge =
 const myPhoto =
    'https://drive.google.com/uc?id=1IB8JnGFkt6CNu0I0kNp-PzjaizOy5Qcd';
 
-function AboutMe({ translation, ...props }: AboutMeProps) {
+function AboutMe({ id, translation, ...props }: AboutMeProps) {
    return (
       <Grid
          as='section'
+         id={id}
          data-limited-box='expanded'
          minH='100vh'
          pt='32'

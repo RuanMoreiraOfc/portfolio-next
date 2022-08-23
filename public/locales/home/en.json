@@ -10,6 +10,32 @@
       "btnResume": "Download CV"
     }
   },
+  "navigator": {
+    "ariaLabel": "Main content",
+    "title": "Skip to",
+    "topics": [
+      {
+        "name": "Intro",
+        "slug": "intro"
+      },
+      {
+        "name": "About me",
+        "slug": "about-me"
+      },
+      {
+        "name": "Skills",
+        "slug": "skills"
+      },
+      {
+        "name": "Projects",
+        "slug": "projects"
+      },
+      {
+        "name": "Contact Me",
+        "slug": "contact-me"
+      }
+    ]
+  },
   "intro": {
     "expertise": "Fullstack Developer",
     "imageAlt": "Standing man at peak of mountain by Jaime Reimer"

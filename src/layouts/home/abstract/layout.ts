@@ -8,5 +8,6 @@ type TImplementation = keyof Internalization;
 
 type HomeLayoutGroup = Readonly<Internalization>;
 type HomeLayout<T extends TImplementation> = {
+  id: string;
   translation: Readonly<Internalization[T]>;
 };

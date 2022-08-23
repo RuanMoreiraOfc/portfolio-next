@@ -17,12 +17,13 @@ export type { ContactMeProps };
 
 type ContactMeProps = {
    pageRef?: RefObject<HTMLElement>;
+   id: HomeLayout<'contactMe'>['id'];
    translation: {
       contactBar: ContactBarProps['translation'];
    } & HomeLayout<'contactMe'>['translation'];
 };
 
-function ContactMe({ pageRef, translation, ...props }: ContactMeProps) {
+function ContactMe({ id, pageRef, translation, ...props }: ContactMeProps) {
    const selfRef = useRef<HTMLDivElement>(null);
    useScroll({
       axis: 'y',
@@ -53,6 +54,7 @@ function ContactMe({ pageRef, translation, ...props }: ContactMeProps) {
       <Grid
          ref={selfRef}
          as='section'
+         id={id}
          data-limited-box='expanded'
          w='full'
          minH='100vh'

@@ -16,6 +16,7 @@ export type { IntroProps };
 
 type IntroProps = {
    pageRef?: RefObject<HTMLElement>;
+   id: HomeLayout<'intro'>['id'];
    translation: {
       contactBar: ContactBarProps['translation'];
    } & HomeLayout<'intro'>['translation'];
@@ -24,7 +25,7 @@ type IntroProps = {
 const blurDataURL =
    'data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAWACADASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAUGBAf/xAAqEAACAQMEAQMCBwAAAAAAAAABAgMEBREABiExEhMiURRhFSNBcYGh0f/EABgBAAIDAAAAAAAAAAAAAAAAAAIGAQME/8QAJREAAQMCAwkAAAAAAAAAAAAAAQACAxEhBAUSFBUxQUOBkcHw/9oADAMBAAIRAxEAPwBrtLaEtLBEJKaRWI4BXk/xq7pbExjYJCzeIPlgdY7zqH21ZmWagqb9c6lrokK/nguxGCcgN/ePudObXWUO4bQ6ecgjaVw/08RAchjlWwAzEYGQwxnrIwdWnGw0qZAs+wTCtIzZMbjtt5V8RCxJ6GNc13rsmVIm9eBofJgg9QeOWPQGe866GYBTzrVmruHkqlBJhiRGRgqAdQO56NZqVI4/xKqWmLGnE3Kr8EKWPOccY/fUbwgHUb5QDL5XG8ZHZOLNuW9Vc7wmqhBZcrmHyA49uef0J5+cAca22Ka82OJ6ad7dO0ULVUjiAgu3AIHPAxjA+3ejRpOe4taKcz6Kdy0Eqmt+4ZLnTwPHEnnP7SzqAF6PQ/3WG8yI1XUU7J7khWR/EBcg9YbHfHxo0aNo1Xd9ZBTTwX//2Q==';
 
-function Intro({ pageRef, translation, ...props }: IntroProps) {
+function Intro({ id, pageRef, translation, ...props }: IntroProps) {
    const selfRef = useRef<HTMLDivElement>(null);
    useScroll({
       axis: 'y',
@@ -54,6 +55,7 @@ function Intro({ pageRef, translation, ...props }: IntroProps) {
       <Box
          ref={selfRef}
          as='section'
+         id={id}
          w='full'
          minH='100vh'
          color='neutral.200'
