@@ -174,6 +174,21 @@ const theme = extendTheme({
           px: 'auto',
         },
       },
+      '[data-tutorial]': {
+        "&[data-tutorial='mobile']": {
+          display: 'none',
+        },
+        "&[data-tutorial='desktop']": {
+          '@media (pointer: coarse)': {
+            display: 'none',
+          },
+        },
+        "&:not([data-tutorial='desktop'])": {
+          '@media (pointer: coarse)': {
+            display: 'revert',
+          },
+        },
+      },
     },
   },
 } as DefaultThemeType);
