@@ -1,0 +1,104 @@
+{
+  "$schema": "./schema.json",
+  "page": {
+    "title": "Pagina Inicial"
+  },
+  "partials": {
+    "contactBar": {
+      "btnSocialMediaTitle": "Ver meu",
+      "btnEmailTitle": "Me enviar um",
+      "btnResume": "Baixar Currículo"
+    }
+  },
+  "navigator": {
+    "ariaLabel": "Conteúdo principal",
+    "title": "Pular para",
+    "topics": [
+      {
+        "name": "Introdução",
+        "slug": "introducao"
+      },
+      {
+        "name": "Sobre Mim",
+        "slug": "sobre-mim"
+      },
+      {
+        "name": "Habilidades",
+        "slug": "habilidades"
+      },
+      {
+        "name": "Meus Projetos",
+        "slug": "meus-projetos"
+      },
+      {
+        "name": "Contate-me",
+        "slug": "contate-me"
+      }
+    ]
+  },
+  "intro": {
+    "expertise": "Desenvolvedor Fullstack",
+    "imageAlt": "Homem Em Pé No Topo Da Montanha por Jaime Reimer"
+  },
+  "aboutMe": {
+    "topic": "Quem é Ruan Moreira?",
+    "imageAlt": "Retrato do criador desse portfólio",
+    "paragraph": {
+      "content": "Desde 2016 quando eu obtive meu primeiro computador, eu me apaixonei pela Web, nada de \"downloads\" ou instalações, você apenas acessa o <1>URL</1> desejado e pronto. Hoje vejo que esse pequeno detalhe foi o pontapé inicial.\n\nNo meio do ano de 2021, eu comecei minha carreira como desenvolvedor, mas isso só foi possível porque, em 2018, um dos meus amigos me mostrou um canal no Youtube que ensinava programação, vi lá a oportunidade de criar minhas próprias aplicações, e desde então procuro melhorar a cada dia. Hoje estou disposto a usar meus conhecimentos para ajudar aqueles que querem se posicionar no mundo através da Web!\n\nAtualmente tenho <1></1> anos de idade!",
+      "tags": {
+        "abbr": {
+          "lang": "pt",
+          "title": "Localizador uniforme de recursos"
+        }
+      }
+    }
+  },
+  "skills": {
+    "topic": "Qual é minha stack?",
+    "btnToggle": {
+      "content": "Mostrar",
+      "active": "Menos",
+      "inactive": "Tudo"
+    },
+    "table": {
+      "headers": [
+        "Nível de preferência",
+        "Usaria se necessário",
+        "Usaria para projetos simples",
+        "Todos os meus projetos tem pelo menos um desses"
+      ],
+      "title": "Isso foi usado nesse projeto"
+    }
+  },
+  "projects": {
+    "topic": "Meus Projetos",
+    "tags": {
+      "ariaLabel": "Alterar visualização de projetos via tags",
+      "btnToggleAll": "Alterar Todos"
+    },
+    "tagsAlert": {
+      "noRepoMessage": "Nenhum repositório bate com a combinação de <1>tags</1> acima",
+      "withRepoMessage": "<1></1> repositórios batem com a combinação de tags acima"
+    },
+    "btnDetails": {
+      "ariaLabel": "Mais sobre"
+    },
+    "modal": {
+      "btnGoToTop": "Voltar para o topo",
+      "btnGoToBottom": "Pular para o fim",
+      "btnGoToCode": "Ver Código",
+      "btnGoToDemo": "Demonstração"
+    }
+  },
+  "contactMe": {
+    "topic": "Contate me",
+    "paragraph": {
+      "content": "Bem, você já sabe um pouco mais sobre mim, mas eu não quero me despedir ainda, lembre-se que você pode entrar em contato comigo por esses meios abaixo ou acessando <1>meu blog</1>!",
+      "tags": {
+        "a": {
+          "href": "/blog"
+        }
+      }
+    }
+  }
+}
