@@ -43,5 +43,25 @@
       ],
       "title": "It was used on this project"
     }
+  },
+  "projects": {
+    "topic": "My Projects",
+    "tags": {
+      "ariaLabel": "Change project visibility via tags",
+      "btnToggleAll": "Toggle All"
+    },
+    "tagsAlert": {
+      "noRepoMessage": "No repository matches the <1>tags</1> above",
+      "withRepoMessage": "<1></1> repositories matches the tags above"
+    },
+    "btnDetails": {
+      "ariaLabel": "Open details of"
+    },
+    "modal": {
+      "btnGoToTop": "Go to top",
+      "btnGoToBottom": "Go to bottom",
+      "btnGoToCode": "Code",
+      "btnGoToDemo": "Demo"
+    }
   }
 }

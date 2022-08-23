@@ -7,7 +7,8 @@
     "partials",
     "intro",
     "aboutMe",
-    "skills"
+    "skills",
+    "projects"
   ],
   "properties": {
     "$schema": {
@@ -175,6 +176,86 @@
               }
             },
             "title": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "projects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "topic",
+        "tags",
+        "tagsAlert",
+        "btnDetails",
+        "modal"
+      ],
+      "properties": {
+        "topic": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ariaLabel",
+            "btnToggleAll"
+          ],
+          "ariaLabel": {
+            "type": "string"
+          },
+          "btnToggleAll": {
+            "type": "string"
+          }
+        },
+        "tagsAlert": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "noRepoMessage",
+            "withRepoMessage"
+          ],
+          "noRepoMessage": {
+            "type": "string"
+          },
+          "withRepoMessage": {
+            "type": "string"
+          }
+        },
+        "btnDetails": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ariaLabel"
+          ],
+          "properties": {
+            "ariaLabel": {
+              "type": "string"
+            }
+          }
+        },
+        "modal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "btnGoToTop",
+            "btnGoToBottom",
+            "btnGoToCode",
+            "btnGoToDemo"
+          ],
+          "properties": {
+            "btnGoToTop": {
+              "type": "string"
+            },
+            "btnGoToBottom": {
+              "type": "string"
+            },
+            "btnGoToCode": {
+              "type": "string"
+            },
+            "btnGoToDemo": {
               "type": "string"
             }
           }
