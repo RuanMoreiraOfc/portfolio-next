@@ -8,7 +8,12 @@ const nextConfig = {
     localeDetection: false,
   },
   images: {
-    domains: ['drive.google.com', 'images.pexels.com'],
+    domains: [
+      'drive.google.com',
+      'images.pexels.com',
+      'user-images.githubusercontent.com',
+      'repository-images.githubusercontent.com',
+    ],
   },
   webpack(config, { dir }) {
     config.module.rules.push({
