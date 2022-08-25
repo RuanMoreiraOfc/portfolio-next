@@ -32,7 +32,9 @@ async function Handler(req: NextApiRequest, res: NextApiResponse) {
       emojis = await getEmojis(emojiPicked);
     }
 
-    const emojiUrl = emojis[emojiPicked];
+    const emojiUrl =
+      'https://github.githubassets.com/images/icons/emoji/' +
+      emojis[emojiPicked];
     const emojiAsCode = emojiUrl.split(/\.|\//).at(-2) || '0';
     const emojiAsString = String.fromCodePoint(parseInt(emojiAsCode, 16));
 
