@@ -88,13 +88,13 @@ const isFallbackModifier = (modifier: string): modifier is FallbackModifier => {
 };
 
 const getEmojis = async (emojiPicked: string) => {
-  // const emojisCache = (await import(
-  //   'public/github-emojis.json'
-  // )) as unknown as EmojisResponse;
+  const emojisCache = (await import(
+    'public/github-emojis.json'
+  )) as unknown as EmojisResponse;
 
-  // if (emojiPicked in emojisCache) {
-  //   return emojisCache;
-  // }
+  if (emojiPicked in emojisCache) {
+    return emojisCache;
+  }
 
   const emojisFromAPI = (await (
     await fetch('https://api.github.com/emojis', {
