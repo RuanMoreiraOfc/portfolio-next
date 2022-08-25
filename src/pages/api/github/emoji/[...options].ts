@@ -32,9 +32,7 @@ async function Handler(req: NextApiRequest, res: NextApiResponse) {
       emojis = await getEmojis(emojiPicked);
     }
 
-    const emojiUrl =
-      'https://github.githubassets.com/images/icons/emoji/' +
-      emojis[emojiPicked];
+    const emojiUrl = repeatedPart + emojis[emojiPicked];
     const emojiAsCode = emojiUrl.split(/\.|\//).at(-2) || '0';
     const emojiAsString = String.fromCodePoint(parseInt(emojiAsCode, 16));
 
@@ -80,6 +78,8 @@ async function Handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+const repeatedPart = 'https://github.githubassets.com/images/icons/emoji/';
+
 const setupImmutableCache = (res: NextApiResponse) =>
   res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
 
@@ -88,13 +88,13 @@ const isFallbackModifier = (modifier: string): modifier is FallbackModifier => {
 };
 
 const getEmojis = async (emojiPicked: string) => {
-  const emojisCache = (await import(
-    'public/github-emojis.json'
-  )) as unknown as EmojisResponse;
+  // const emojisCache = (await import(
+  //   'public/github-emojis.json'
+  // )) as unknown as EmojisResponse;
 
-  if (emojiPicked in emojisCache) {
-    return emojisCache;
-  }
+  // if (emojiPicked in emojisCache) {
+  //   return emojisCache;
+  // }
 
   const emojisFromAPI = (await (
     await fetch('https://api.github.com/emojis', {
@@ -109,7 +109,14 @@ const getEmojis = async (emojiPicked: string) => {
     throw new Error('Impossible to response!');
   }
 
-  return emojisFromAPI;
+  const minifiedEmojisFromApi = Object.fromEntries(
+    Object.entries(emojisFromAPI).map(([key, value]) => [
+      key,
+      value.replace(repeatedPart, ''),
+    ]),
+  );
+
+  return minifiedEmojisFromApi;
 };
 
 const generateEmojiPhoto = async (emojiAsString: string) => {
