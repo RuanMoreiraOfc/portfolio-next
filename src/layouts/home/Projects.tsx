@@ -185,6 +185,7 @@ function Projects({
                   minH='25rem'
                   gap='inherit'
                   pos='relative'
+                  overflow='hidden'
                >
                   {hasChangeOnce && (
                      <CountAlert
@@ -199,11 +200,6 @@ function Projects({
                      ref={carouselRef}
                      data-snapped-scroll='x'
                      p='1'
-                     // USED TO AVOID ADD "OVERFLOW: HIDDEN" ON PARENT
-                     w={{
-                        base: 'calc(100vw - var(--chakra-space-mobile-base) * 2)',
-                        md: 'revert',
-                     }}
                      display='flex'
                      gap='inherit'
                      sx={{
@@ -234,22 +230,31 @@ function Projects({
                      top='60%'
                      transform='translateY(-50%)'
                   />
-                  {filteredProjects.length > 1 && (
-                     <Fragment>
-                        <CarrouselButton
-                           direction='left'
-                           carouselRef={carouselRef}
-                        />
-                        <CarrouselButton
-                           direction='right'
-                           carouselRef={carouselRef}
-                           disabled={carouselCanScroll === false}
-                        />
-                     </Fragment>
-                  )}
                </Box>
             )}
          </WithTutorial>
+
+         {filteredProjects.length > 1 && (
+            <Fragment>
+               <CarrouselButton
+                  direction='left'
+                  carouselRef={carouselRef}
+                  top='unset'
+                  // pb_parent * 4 + minH_slider / 2
+                  bottom='calc(16 * 4px + 25rem / 2)'
+                  left='calc(var(--chakra-space-up-to-max-content))'
+               />
+               <CarrouselButton
+                  direction='right'
+                  carouselRef={carouselRef}
+                  disabled={carouselCanScroll === false}
+                  top='unset'
+                  // pb_parent * 4 + minH_slider / 2
+                  bottom='calc(16 * 4px + 25rem / 2)'
+                  right='calc(var(--chakra-space-up-to-max-content))'
+               />
+            </Fragment>
+         )}
       </Grid>
    );
 }
