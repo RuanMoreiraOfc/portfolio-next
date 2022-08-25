@@ -176,7 +176,8 @@ const getStaticProps: GetStaticProps<HomeStaticProps> = async (ctx) => {
             (item) =>
                item === 'fullstack' ||
                item === 'backend' ||
-               item === 'frontend',
+               item === 'frontend' ||
+               item === 'userscript',
          ) ?? null) as ProjectData['projectType'];
 
          const tags = topicList.filter(
@@ -185,7 +186,8 @@ const getStaticProps: GetStaticProps<HomeStaticProps> = async (ctx) => {
                item !== 'professional-project' &&
                item !== 'fullstack' &&
                item !== 'backend' &&
-               item !== 'frontend',
+               item !== 'frontend' &&
+               item !== 'userscript',
          );
 
          const thumbnail = repo.hasThumbnail ? repo.thumbnail : null;

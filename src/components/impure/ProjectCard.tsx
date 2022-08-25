@@ -1,6 +1,7 @@
 import FrontendSvg from '@a-icons/frontend.svg';
 import FullstackSvg from '@a-icons/fullstack.svg';
 import BackendSvg from '@a-icons/backend.svg';
+import UserscriptSvg from '@a-icons/userscript.svg';
 
 import type { OmitDistributive } from '@~types/omitDistributive';
 
@@ -30,7 +31,7 @@ export type { ProjectCardProps, Project };
 
 type Project = {
    tags: string[];
-   projectType: null | 'fullstack' | 'backend' | 'frontend';
+   projectType: null | 'fullstack' | 'backend' | 'frontend' | 'userscript';
    repoName: string;
    name: string;
    description: null | string;
@@ -116,7 +117,8 @@ function ProjectCard({
                         fontWeight='bold'
                         textTransform='capitalize'
                      >
-                        {projectType} App
+                        {projectType}{' '}
+                        {projectType !== 'userscript' ? 'App' : ''}
                      </Text>
                   </Fragment>
                )
@@ -159,6 +161,7 @@ const PROJECT_TYPE_ICONS = {
    frontend: FrontendSvg,
    fullstack: FullstackSvg,
    backend: BackendSvg,
+   userscript: UserscriptSvg,
 };
 
 type ProjectModalProps = {
