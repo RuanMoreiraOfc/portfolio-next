@@ -1,7 +1,6 @@
 import { isNull, isString, isUndefined } from 'util';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import sharp from 'sharp';
 import { utilizePage } from '@lib/chromium';
 
 export default Handler;
@@ -145,7 +144,7 @@ const generateEmojiPhoto = async (emojiAsString: string) => {
     );
 
     const screenshot = await page.screenshot({ type: 'webp' });
-    return await sharp(screenshot).avif({ quality: 40 }).toBuffer();
+    return screenshot;
   });
 
   return {
