@@ -17,10 +17,14 @@ async function middleware(req: NextRequest) {
     | 'script'
     | 'empty';
 
+  const vercelURL = process.env.VERCEL_URL as string;
+  const currentURL = req.nextUrl;
+
   if (
     dest !== 'document' ||
-    req.nextUrl.pathname.includes('.') ||
-    ['/_next', '/api'].some((e) => req.nextUrl.pathname.startsWith(e))
+    currentURL.pathname.includes('.') ||
+    currentURL.origin.startsWith(vercelURL) ||
+    ['/_next', '/api'].some((e) => currentURL.pathname.startsWith(e))
   ) {
     const response = NextResponse.next();
     return response;
@@ -31,7 +35,15 @@ async function middleware(req: NextRequest) {
     defaults: { langs: locales },
   } = filterRequestedLanguageApi({ headers });
 
-  const [subdomain] = headers.host
+  const currentLocation =
+    (headers[':authority:'] as string | undefined) ?? headers.host;
+
+  if (currentLocation === undefined) {
+    const response = NextResponse.next();
+    return response;
+  }
+
+  const [subdomain] = currentLocation
     ?.split('.')
     .reduce((acc, e, i, { length: parts_count }) => {
       if (parts_count <= Number(process.env!.DOMAIN_PARTS_COUNT)) {
@@ -41,7 +53,7 @@ async function middleware(req: NextRequest) {
       acc.push(e);
       return acc;
     }, [] as string[]) ?? [''];
-  const { origin, pathname, search, hash, locale } = req.nextUrl;
+  const { origin, pathname, search, hash, locale } = currentURL;
   const langFromPathname = req.url
     .replace(origin, '')
     .replace(pathname, '')
