@@ -187,14 +187,7 @@ function Skills({ id, translation, ...props }: SkillsProps) {
                         display={displayAfterMd}
                      />
                      <CustomTDCell //
-                        icons={[
-                           {
-                              icon: SiNextdotjs,
-                              text: 'NextJS',
-                              usedInThisProject: true,
-                           },
-                           { icon: SiElixir, text: 'Elixir' },
-                        ]}
+                        icons={[{ icon: SiElixir, text: 'Elixir' }]}
                         borderWidth={borderWidthAfterToggle}
                      />
                   </Tr>
@@ -228,7 +221,6 @@ function Skills({ id, translation, ...props }: SkillsProps) {
                            {
                               icon: SiReact,
                               text: 'React',
-                              usedInThisProject: true,
                            },
                            { icon: SiSass, text: 'Sass' },
                         ]}
@@ -254,6 +246,11 @@ function Skills({ id, translation, ...props }: SkillsProps) {
                      />
                      <CustomTDCell //
                         icons={[
+                           {
+                              icon: SiNextdotjs,
+                              text: 'NextJS',
+                              usedInThisProject: true,
+                           },
                            {
                               icon: SiTypescript,
                               text: 'Typescript',
