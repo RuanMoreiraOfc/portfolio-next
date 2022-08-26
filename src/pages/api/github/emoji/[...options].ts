@@ -80,8 +80,9 @@ async function Handler(req: NextApiRequest, res: NextApiResponse) {
 
 const repeatedPart = 'https://github.githubassets.com/images/icons/emoji/';
 
-const setupImmutableCache = (res: NextApiResponse) =>
-  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+const setupImmutableCache = (res: NextApiResponse) => {
+  return res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+};
 
 const isFallbackModifier = (modifier: string): modifier is FallbackModifier => {
   return modifier === '' || modifier === 'fallback';
