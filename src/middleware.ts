@@ -17,13 +17,12 @@ async function middleware(req: NextRequest) {
     | 'script'
     | 'empty';
 
-  const vercelURL = process.env.VERCEL_URL as string;
   const currentURL = req.nextUrl;
 
   if (
     dest !== 'document' ||
     currentURL.pathname.includes('.') ||
-    currentURL.origin.startsWith(vercelURL) ||
+    currentURL.origin.endsWith('vercel.app') ||
     ['/_next', '/api'].some((e) => currentURL.pathname.startsWith(e))
   ) {
     const response = NextResponse.next();
