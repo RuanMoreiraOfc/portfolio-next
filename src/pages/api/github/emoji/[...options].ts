@@ -1,8 +1,8 @@
 import { isNull, isString, isUndefined } from 'util';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createCanvas } from 'canvas';
 
 import sharp from 'sharp';
+import { utilizePage } from '@lib/chromium';
 
 export default Handler;
 
@@ -121,12 +121,32 @@ const getEmojis = async (emojiPicked: string) => {
 };
 
 const generateEmojiPhoto = async (emojiAsString: string) => {
-  const canvas = createCanvas(64, 64);
-  const context = canvas.getContext('2d');
-  context.font = '42pt sans-serif';
-  context.fillText(emojiAsString, -5, 52);
+  const isDev = isUndefined(process.env.AWS_REGION);
+  const buffer = await utilizePage(isDev, async (page) => {
+    await page.setViewport({ width: 32, height: 32 });
+    await page.setContent(
+      `
+    <html>
+      <head>
+        <style>
+          body {
+            margin: -2px 0;
+            background: #f1f1f1;
+            font-family: sans-serif;
+            font-size: 25px;
+          }
+        </style>
+      </head>
+      <body>
+        <div>${emojiAsString}</div>
+      </body>
+    </html>
+    `,
+    );
 
-  const buffer = await sharp(canvas.toBuffer()).avif({ quality: 1 }).toBuffer();
+    const screenshot = await page.screenshot({ type: 'webp' });
+    return await sharp(screenshot).avif({ quality: 40 }).toBuffer();
+  });
 
   return {
     buffer,
