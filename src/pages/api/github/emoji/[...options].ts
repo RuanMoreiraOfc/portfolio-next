@@ -1,12 +1,10 @@
 import { isNull, isString, isUndefined } from 'util';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { utilizePage } from '@lib/chromium';
-
 export default Handler;
 
 type FallbackModifier = '' | 'fallback';
-type Modifiers = FallbackModifier | 'photo' | 'unicode';
+type Modifiers = FallbackModifier | 'svg' | 'unicode';
 type EmojisResponse = Record<string, string>;
 
 let emojis: EmojisResponse | null = null;
@@ -57,6 +55,10 @@ async function Handler(req: NextApiRequest, res: NextApiResponse) {
     const { buffer, mimeType } = await generateEmojiPhoto(emojiAsString);
 
     setupImmutableCache(res) //
+      .setHeader(
+        'Content-Disposition',
+        `inline; filename="emoji_${emojiPicked}.svg"`,
+      )
       .setHeader('Content-Type', mimeType)
       .send(buffer);
     return;
@@ -120,35 +122,16 @@ const getEmojis = async (emojiPicked: string) => {
 };
 
 const generateEmojiPhoto = async (emojiAsString: string) => {
-  const isDev = isUndefined(process.env.AWS_REGION);
-  const buffer = await utilizePage(isDev, async (page) => {
-    await page.setViewport({ width: 32, height: 32 });
-    await page.setContent(
-      `
-    <html>
-      <head>
-        <style>
-          body {
-            margin: -2px 0;
-            background: #f1f1f1;
-            font-family: sans-serif;
-            font-size: 25px;
-          }
-        </style>
-      </head>
-      <body>
-        <div>${emojiAsString}</div>
-      </body>
-    </html>
-    `,
-    );
-
-    const screenshot = await page.screenshot({ type: 'webp' });
-    return screenshot;
-  });
+  const buffer = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <text x="0" y="15">
+        ${emojiAsString}
+      </text>
+    </svg>
+  `.replace(/\n+/, ' ');
 
   return {
     buffer,
-    mimeType: 'image/avif',
+    mimeType: 'image/svg+xml',
   };
 };

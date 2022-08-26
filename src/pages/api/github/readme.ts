@@ -117,7 +117,7 @@ async function Handler(req: NextApiRequest, res: NextApiResponse) {
     marked(text, { baseUrl: `${repoUrl}/blob/${defaultBranch}/` })
       .replace(/:(?<emoji>\w*?):/g, (...args: any[]) => {
         const emoji = args.at(-1).emoji;
-        return `<img src="/api/github/emoji/${emoji}/photo" alt=":${emoji}:" />`;
+        return `<img src="/api/github/emoji/${emoji}/svg" alt=":${emoji}:" />`;
       })
       .replace(/&#39;/g, '&quot;')
       .replace(/(?:\r?\n)+/g, '')
