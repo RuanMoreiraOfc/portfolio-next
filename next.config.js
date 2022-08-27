@@ -33,8 +33,21 @@ const nextConfig = {
   },
 };
 
-if (process.env.DOMAIN_PARTS_COUNT === undefined) {
-  throw new Error(`\`DOMAIN_PARTS_COUNT\` was not defined!`);
+const REQUIRED_VARIABLES = [
+  'DOMAIN_PARTS_COUNT',
+  'GITHUB_ACCESS_TOKEN',
+  'RESUME_URL_EN',
+  'RESUME_URL_PT',
+];
+const VARIABLES_UNDEFINED = REQUIRED_VARIABLES.filter(
+  (variable) => process.env[variable] === undefined,
+);
+if (VARIABLES_UNDEFINED.length > 0) {
+  throw new Error(
+    `\`${VARIABLES_UNDEFINED.join(' & ')}\` ${
+      VARIABLES_UNDEFINED.length === 1 ? 'was' : 'were'
+    } not defined!`,
+  );
 }
 
 module.exports = nextConfig;
