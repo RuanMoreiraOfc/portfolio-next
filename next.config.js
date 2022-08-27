@@ -9,7 +9,6 @@ const nextConfig = {
   },
   images: {
     domains: [
-      'drive.google.com',
       'images.pexels.com',
       'user-images.githubusercontent.com',
       'repository-images.githubusercontent.com',

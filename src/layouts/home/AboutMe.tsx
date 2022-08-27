@@ -16,9 +16,6 @@ const myAge =
       new Date('02/07/2003 UTC 3:00').valueOf() - Date.now(),
    ).getFullYear();
 
-const myPhoto =
-   'https://drive.google.com/uc?id=1IB8JnGFkt6CNu0I0kNp-PzjaizOy5Qcd';
-
 function AboutMe({ id, translation, ...props }: AboutMeProps) {
    return (
       <Grid
@@ -46,7 +43,7 @@ function AboutMe({ id, translation, ...props }: AboutMeProps) {
                flexShrink='0'
             >
                <Image
-                  src={myPhoto}
+                  src={'/api/selfie'}
                   width={320}
                   height={425}
                   alt={translation.imageAlt}
