@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "comingSoon"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "comingSoon": {
+      "type": "string"
+    }
+  }
+}
