@@ -38,6 +38,7 @@ const REQUIRED_VARIABLES = [
   'GITHUB_ACCESS_TOKEN',
   'RESUME_URL_EN',
   'RESUME_URL_PT',
+  'SELFIE_URL',
 ];
 const VARIABLES_UNDEFINED = REQUIRED_VARIABLES.filter(
   (variable) => process.env[variable] === undefined,
