@@ -173,7 +173,7 @@ const theme = extendTheme({
         },
         "&[data-snapped-scroll='y']": {
           overflowY: 'scroll',
-          scrollSnapType: { base: 'y proximity', lg: 'y mandatory' },
+          scrollSnapType: { lg: 'y mandatory' },
         },
 
         msOverflowStyle: 'none',
