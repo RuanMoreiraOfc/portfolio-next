@@ -1,5 +1,6 @@
 import type { OmitDistributive } from '@~types/omitDistributive';
 
+import { isString } from 'util';
 import type { ReactNode, FunctionComponent } from 'react';
 import type { LinkProps as NextLinkProps } from 'next/link';
 import NextLink from 'next/link';
@@ -28,7 +29,7 @@ type SafeLinkDefaultProps = {
 };
 
 type SafeLinkProps = {
-   to: string;
+   to: NextLinkProps['href'];
    toMask?: NextLinkProps['as'];
    locale?: NextLinkProps['locale'];
    children: ReactNode;
@@ -55,24 +56,27 @@ function SafeLink({
    download,
    ...restLinkProps
 }: SafeLinkProps) {
+   const URLOrProtocol = isString(to) ? to : to.protocol ?? 'same-origin';
+
    const isNoHTTPS =
-      to.startsWith('http:') ||
-      (to.startsWith('//') && to.startsWith('//www.') === false);
+      URLOrProtocol.startsWith('http:') ||
+      (URLOrProtocol.startsWith('//') &&
+         URLOrProtocol.startsWith('//www.') === false);
 
    if (isNoHTTPS) {
       if (shouldSuppressUnsecureWarnings === false) {
          throw new Error(
-            `\`${to}\` is an invalid \`to\` prop! Don't use external links without \`https\` protocol!`,
+            `\`${URLOrProtocol}\` is an invalid \`to\` prop! Don't use external links without \`https\` protocol!`,
          );
       }
    }
 
    const isExternal =
       isNoHTTPS ||
-      to.startsWith('tel:') ||
-      to.startsWith('mailto:') ||
-      to.startsWith('http://') ||
-      to.startsWith('https://');
+      URLOrProtocol.startsWith('tel:') ||
+      URLOrProtocol.startsWith('mailto:') ||
+      URLOrProtocol.startsWith('http:') ||
+      URLOrProtocol.startsWith('https:');
 
    const isForeign = isExternal && !isSelfExternal;
    const linkProps: ChakraLinkPropsFiltered = Object.assign(
