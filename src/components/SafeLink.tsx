@@ -1,6 +1,7 @@
 import type { OmitDistributive } from '@~types/omitDistributive';
 
 import type { ReactNode, FunctionComponent } from 'react';
+import type { LinkProps as NextLinkProps } from 'next/link';
 import NextLink from 'next/link';
 import type { LinkProps as ChakraLinkProps } from '@chakra-ui/react';
 import {
@@ -28,6 +29,8 @@ type SafeLinkDefaultProps = {
 
 type SafeLinkProps = {
    to: string;
+   toMask?: NextLinkProps['as'];
+   locale?: NextLinkProps['locale'];
    children: ReactNode;
 } & (SafeLinkDefaultProps & ChakraLinkPropsFiltered);
 
@@ -42,7 +45,9 @@ SafeLink.defaultProps = defaultProps;
 
 function SafeLink({
    children,
+   locale,
    to,
+   toMask,
    isSelfExternal,
    shouldRemoveIcon,
    shouldSuppressUnsecureWarnings,
@@ -98,7 +103,12 @@ function SafeLink({
       : ChakraLink) as unknown as FunctionComponent<ChakraLinkProps>;
 
    return (
-      <NextLink href={to} passHref locale={false}>
+      <NextLink //
+         href={to}
+         as={toMask}
+         locale={locale ?? false}
+         passHref
+      >
          <Tag as='a' display='inline-flex' {...linkProps}>
             {children}
             {shouldRemoveIcon === false && isExternal === true && (
