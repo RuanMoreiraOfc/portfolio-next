@@ -1,8 +1,8 @@
-import { isNull, isNumber } from 'util';
+import { isNull, isNumber, isUndefined } from 'util';
 
 import type { KeyboardEventHandler, MouseEvent } from 'react';
 
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 
 import { Fragment } from 'react';
 import { Grid, Heading, List, ListItem, Box } from '@chakra-ui/react';
@@ -44,19 +44,16 @@ function Projects({
    const [hasChangeOnce, setHasChangeOnce] = useState(false);
    const [carouselCanScroll, setCarouselCanScroll] = useState(true);
    const [statedTags, setStatedTags] = useState<Record<string, TagState>>(
-      Object.fromEntries(
-         [btnToggleAllTranslation]
-            .concat(
-               Array.from(
-                  new Set(
-                     projects.flatMap((e) => e.tags),
-                     // .sort((a, b) => a.length - b.length),
-                  ),
-               ),
-            )
-            .map((e) => [e, 'active' as TagState]),
-      ),
+      generateStatedTagsState(btnToggleAllTranslation, projects),
    );
+
+   useEffect(() => {
+      if (!isUndefined(statedTags[btnToggleAllTranslation])) {
+         return;
+      }
+
+      setStatedTags(generateStatedTagsState(btnToggleAllTranslation, projects));
+   }, [statedTags, btnToggleAllTranslation, projects]);
 
    // ***
 
@@ -257,6 +254,26 @@ function Projects({
          )}
       </Grid>
    );
+}
+
+function generateStatedTagsState(
+   allButton: string,
+   taggedItems: Array<Project>,
+): Record<string, TagState> {
+   const result = Object.fromEntries(
+      [allButton]
+         .concat(
+            Array.from(
+               new Set(
+                  taggedItems.flatMap((e) => e.tags),
+                  // .sort((a, b) => a.length - b.length),
+               ),
+            ),
+         )
+         .map((e) => [e, 'active' as TagState]),
+   );
+
+   return result;
 }
 
 const TagsArrowMoveHandler: KeyboardEventHandler<HTMLOListElement> = (
