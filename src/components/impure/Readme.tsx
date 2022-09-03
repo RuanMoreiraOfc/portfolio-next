@@ -249,7 +249,7 @@ const anchorOverride = (lang?: null | string) => ({
             href={undefined}
             isSelfExternal={isSelfExternal}
             shouldRemoveIcon
-            shouldSuppressWarnings
+            shouldSuppressUnsecureWarnings
          />
       );
    },

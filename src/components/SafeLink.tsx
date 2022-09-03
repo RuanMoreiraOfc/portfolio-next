@@ -21,7 +21,7 @@ type ChakraLinkPropsFiltered = OmitDistributive<
 
 type SafeLinkDefaultProps = {
    shouldRemoveIcon: boolean;
-   shouldSuppressWarnings: boolean;
+   shouldSuppressUnsecureWarnings: boolean;
    isSelfExternal: boolean;
    unreachable: boolean;
 };
@@ -33,7 +33,7 @@ type SafeLinkProps = {
 
 const defaultProps: Readonly<SafeLinkDefaultProps> = Object.freeze({
    shouldRemoveIcon: false,
-   shouldSuppressWarnings: false,
+   shouldSuppressUnsecureWarnings: false,
    isSelfExternal: true,
    unreachable: false,
 } as SafeLinkDefaultProps);
@@ -45,7 +45,7 @@ function SafeLink({
    to,
    isSelfExternal,
    shouldRemoveIcon,
-   shouldSuppressWarnings,
+   shouldSuppressUnsecureWarnings,
    unreachable,
    download,
    ...restLinkProps
@@ -55,7 +55,7 @@ function SafeLink({
       (to.startsWith('//') && to.startsWith('//www.') === false);
 
    if (isNoHTTPS) {
-      if (shouldSuppressWarnings === false) {
+      if (shouldSuppressUnsecureWarnings === false) {
          throw new Error(
             `\`${to}\` is an invalid \`to\` prop! Don't use external links without \`https\` protocol!`,
          );
