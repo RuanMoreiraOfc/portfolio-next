@@ -21,7 +21,9 @@ type OrbDefaultProps = {
    };
 };
 
-type OrbProps = {} & OrbDefaultProps & Pick<SafeLinkProps, 'to'> & BoxProps;
+type OrbProps = {} & OrbDefaultProps &
+   Pick<SafeLinkProps, 'to' | 'replace'> &
+   BoxProps;
 
 const defaultProps: Readonly<OrbDefaultProps> = Object.freeze({
    initialPercentageInDecimal: 0,
@@ -39,6 +41,7 @@ Orb.defaultProps = defaultProps;
 
 function Orb({
    to,
+   replace,
    children,
    initialPercentageInDecimal,
    orb: {
@@ -97,6 +100,7 @@ function Orb({
    return (
       <SafeLink
          to={to}
+         replace={replace}
          display='grid'
          placeItems='center'
          _hover={{ textDecor: 'none' }}

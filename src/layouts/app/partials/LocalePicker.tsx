@@ -290,6 +290,7 @@ function LocalePicker({ translation }: LocalePickerProps) {
                <SafeLink
                   to={{ query: { locale: 'pt' } }}
                   locale='pt'
+                  replace
                   unreachable
                   colorScheme='blackAlpha'
                   role='menuitem'
@@ -307,6 +308,7 @@ function LocalePicker({ translation }: LocalePickerProps) {
                <SafeLink
                   to={{ query: { locale: 'en' } }}
                   locale='en'
+                  replace
                   unreachable
                   colorScheme='blackAlpha'
                   role='menuitem'

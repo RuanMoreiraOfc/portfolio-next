@@ -126,6 +126,7 @@ function HeaderLandingPage({
                         initialPercentageInDecimal={i === 0 ? 1 : 0}
                         title={`${translation.title} ${topic}`}
                         to={`#${slug}`}
+                        replace
                      >
                         <Text //
                            as='span'
