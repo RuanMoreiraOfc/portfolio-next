@@ -52,7 +52,8 @@ async function middleware(req: NextRequest) {
       acc.push(e);
       return acc;
     }, [] as string[]) ?? [''];
-  const { origin, pathname, search, hash, locale } = currentURL;
+  const { origin, pathname, search, hash, locale, searchParams } = currentURL;
+  const langFromParam = String(searchParams.getAll('locale'));
   const langFromPathname = req.url
     .replace(origin, '')
     .replace(pathname, '')
@@ -60,17 +61,24 @@ async function middleware(req: NextRequest) {
     .replace(hash, '');
 
   const preferredLang = locales.includes(subdomain)
-    ? subdomain
-    : langFromPathname || langFromBrowser;
+    ? locales.includes(langFromParam)
+      ? langFromParam
+      : subdomain
+    : langFromParam || langFromPathname || langFromBrowser;
 
-  const fillURL = (baseURL: URL | string, ...pathnames: string[]) =>
-    new URL(
+  const fillURL = (baseURL: URL | string, ...pathnames: string[]) => {
+    searchParams.delete('locale');
+
+    const newUrl = new URL(
       hash,
       new URL(
-        search,
+        currentURL.search,
         new URL(pathnames.map((e) => e.replace(/\//, '')).join('/'), baseURL),
       ),
     );
+
+    return newUrl;
+  };
 
   const originWithLangInSubdomain = origin
     .replace(`://${subdomain}`, `://`)
@@ -83,6 +91,13 @@ async function middleware(req: NextRequest) {
     preferredLang,
     pathname,
   );
+
+  if (locales.includes(langFromParam)) {
+    const response = NextResponse.redirect(redirectDestination, {
+      status: 308,
+    });
+    return response;
+  }
 
   if (locales.includes(subdomain) === false) {
     const response = NextResponse.redirect(redirectDestination);
