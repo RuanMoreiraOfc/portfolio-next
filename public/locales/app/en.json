@@ -1,0 +1,8 @@
+{
+  "$schema": "./schema.json",
+  "localePicker": {
+    "button": {
+      "label": "Preferred language"
+    }
+  }
+}
