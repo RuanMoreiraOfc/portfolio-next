@@ -30,7 +30,7 @@ async function middleware(req: NextRequest) {
   }
 
   const {
-    lang: betterLang,
+    lang: langFromBrowser,
     defaults: { langs: locales },
   } = filterRequestedLanguageApi({ headers });
 
@@ -61,7 +61,7 @@ async function middleware(req: NextRequest) {
 
   const preferredLang = locales.includes(subdomain)
     ? subdomain
-    : langFromPathname || betterLang;
+    : langFromPathname || langFromBrowser;
 
   const fillURL = (baseURL: URL | string, ...pathnames: string[]) =>
     new URL(
@@ -72,13 +72,17 @@ async function middleware(req: NextRequest) {
       ),
     );
 
-  const newOrigin = origin
+  const originWithLangInSubdomain = origin
     .replace(`://${subdomain}`, `://`)
     .replace(`://`, `://${preferredLang}.`)
     .replace('..', '.');
 
-  const redirectDestination = fillURL(newOrigin, pathname);
-  const rewriteDestination = fillURL(newOrigin, preferredLang, pathname);
+  const redirectDestination = fillURL(originWithLangInSubdomain, pathname);
+  const rewriteDestination = fillURL(
+    originWithLangInSubdomain,
+    preferredLang,
+    pathname,
+  );
 
   if (locales.includes(subdomain) === false) {
     const response = NextResponse.redirect(redirectDestination);
