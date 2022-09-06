@@ -32,6 +32,7 @@ type SafeLinkProps = {
    to: NextLinkProps['href'];
    toMask?: NextLinkProps['as'];
    locale?: NextLinkProps['locale'];
+   replace?: NextLinkProps['replace'];
    children: ReactNode;
 } & (SafeLinkDefaultProps & ChakraLinkPropsFiltered);
 
@@ -46,6 +47,7 @@ SafeLink.defaultProps = defaultProps;
 
 function SafeLink({
    children,
+   replace,
    locale,
    to,
    toMask,
@@ -111,6 +113,7 @@ function SafeLink({
          href={to}
          as={toMask}
          locale={locale ?? false}
+         replace={replace}
          passHref
       >
          <Tag as='a' display='inline-flex' {...linkProps}>
