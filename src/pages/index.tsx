@@ -1,5 +1,5 @@
 import { UnwrapArray } from '@~types/unwrap';
-import { translate } from '@lib/translatePage';
+import { translatePaths } from '@lib/translatePage';
 
 import { api } from '@services/github/api';
 import type {
@@ -17,6 +17,8 @@ import { Fragment } from 'react';
 import Head from 'next/head';
 import { Box } from '@chakra-ui/react';
 
+import type { AppLayoutGroup } from '@layouts/app/abstract/layout';
+import LocalePicker from '@layouts/app/partials/LocalePicker';
 import type { HomeLayoutGroup } from '@layouts/home/abstract/layout';
 import HeaderLandingPage from '@layouts/home/HeaderLandingPage';
 import Intro from '@layouts/home/Intro';
@@ -34,7 +36,7 @@ type ProjectData = UnwrapArray<ProjectsProps['projects']>;
 
 type HomeStaticProps = {
    projects: ProjectData[];
-   translation: HomeLayoutGroup;
+   translation: AppLayoutGroup & HomeLayoutGroup;
 };
 
 type HomeProps = {} & HomeStaticProps;
@@ -59,6 +61,8 @@ function Home({ projects, translation }: HomeProps) {
             pageRef={pageRef}
             translation={translation.navigator}
          />
+
+         <LocalePicker translation={translation.localePicker} />
 
          <Box //
             ref={pageRef}
@@ -106,7 +110,10 @@ function Home({ projects, translation }: HomeProps) {
 }
 
 const getStaticProps: GetStaticProps<HomeStaticProps> = async (ctx) => {
-   const translation = await translate<HomeLayoutGroup>('home', ctx);
+   const translation = await translatePaths<AppLayoutGroup & HomeLayoutGroup>(
+      ['app', 'home'],
+      ctx,
+   );
 
    if (isNull(translation)) {
       return {
