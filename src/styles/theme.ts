@@ -141,8 +141,6 @@ const theme = extendTheme({
         '--thumb-color': 'var(--chakra-colors-neutral-500)',
         '--track-color': 'var(--chakra-colors-neutral-400)',
 
-        scrollBehavior: 'smooth',
-
         msScrollbarArrowColor: 'transparent',
         msScrollbarFaceColor: 'var(--thumb-color)',
         msScrollbarHighlightColor: 'var(--track-color)',
