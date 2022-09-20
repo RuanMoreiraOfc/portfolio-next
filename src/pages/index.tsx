@@ -78,7 +78,7 @@ function Home({ projects, translation }: HomeProps) {
                   },
                },
             }}
-            onFocus={() => {
+            onFocus={({ target }) => {
                const self = pageRef.current;
 
                if (isNull(self)) {
@@ -86,6 +86,10 @@ function Home({ projects, translation }: HomeProps) {
                }
 
                if (navigator.userAgent.includes('Chrome') === false) {
+                  return;
+               }
+
+               if (document.getElementById(topicIds[3])?.contains(target)) {
                   return;
                }
 
