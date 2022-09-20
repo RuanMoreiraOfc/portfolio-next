@@ -165,7 +165,7 @@ const theme = extendTheme({
         h: '100vh',
       },
       '[data-snapped-scroll]': {
-        scrollBehavior: 'smooth',
+        // scrollBehavior: 'smooth',
 
         "&[data-snapped-scroll='x']": {
           overflowX: 'scroll',

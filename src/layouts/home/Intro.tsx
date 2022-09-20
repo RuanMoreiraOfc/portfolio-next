@@ -1,9 +1,3 @@
-import { isNull } from 'util';
-import type { RefObject } from 'react';
-
-import { useRef } from 'react';
-import useScroll from '@hooks/useScroll';
-
 import Image from 'next/image';
 import { Box, Grid, Heading, Text } from '@chakra-ui/react';
 
@@ -15,7 +9,6 @@ export default Intro;
 export type { IntroProps };
 
 type IntroProps = {
-   pageRef?: RefObject<HTMLElement>;
    id: HomeLayout<'intro'>['id'];
    translation: {
       contactBar: ContactBarProps['translation'];
@@ -25,35 +18,9 @@ type IntroProps = {
 const blurDataURL =
    'data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAWACADASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAUGBAf/xAAqEAACAQMEAQMCBwAAAAAAAAABAgMEBREABiExEhMiURRhFSNBcYGh0f/EABgBAAIDAAAAAAAAAAAAAAAAAAIGAQME/8QAJREAAQMCAwkAAAAAAAAAAAAAAQACAxEhBAUSFBUxQUOBkcHw/9oADAMBAAIRAxEAPwBrtLaEtLBEJKaRWI4BXk/xq7pbExjYJCzeIPlgdY7zqH21ZmWagqb9c6lrokK/nguxGCcgN/ePudObXWUO4bQ6ecgjaVw/08RAchjlWwAzEYGQwxnrIwdWnGw0qZAs+wTCtIzZMbjtt5V8RCxJ6GNc13rsmVIm9eBofJgg9QeOWPQGe866GYBTzrVmruHkqlBJhiRGRgqAdQO56NZqVI4/xKqWmLGnE3Kr8EKWPOccY/fUbwgHUb5QDL5XG8ZHZOLNuW9Vc7wmqhBZcrmHyA49uef0J5+cAca22Ka82OJ6ad7dO0ULVUjiAgu3AIHPAxjA+3ejRpOe4taKcz6Kdy0Eqmt+4ZLnTwPHEnnP7SzqAF6PQ/3WG8yI1XUU7J7khWR/EBcg9YbHfHxo0aNo1Xd9ZBTTwX//2Q==';
 
-function Intro({ id, pageRef, translation, ...props }: IntroProps) {
-   const selfRef = useRef<HTMLDivElement>(null);
-   useScroll({
-      axis: 'y',
-      target: pageRef,
-      call({ currentPercentageInDecimalScrollY }) {
-         const thisSection = selfRef.current;
-
-         if (isNull(thisSection)) {
-            throw new Error('No `Intro` found!');
-         }
-
-         if (currentPercentageInDecimalScrollY === 0) {
-            thisSection.style.removeProperty('z-index');
-            return;
-         }
-
-         if (currentPercentageInDecimalScrollY > 0.5) {
-            return;
-         }
-
-         thisSection.style.zIndex = '-1';
-      },
-      callDeps: [],
-   });
-
+function Intro({ id, translation, ...props }: IntroProps) {
    return (
       <Box
-         ref={selfRef}
          as='section'
          id={id}
          w='full'
@@ -61,16 +28,8 @@ function Intro({ id, pageRef, translation, ...props }: IntroProps) {
          color='neutral.200'
          pos='relative'
          pointerEvents='none'
+         clipPath='inset(0)'
          sx={{
-            '&:focus-within': {
-               // FIXES STOPING IN NEXT SIBBLING ON SCROLL
-               "&[style*='z-index'] ~ *": {
-                  display: 'none',
-               },
-               '& > *': {
-                  pos: 'absolute',
-               },
-            },
             '& > *': {
                pos: 'fixed',
                inset: 0,

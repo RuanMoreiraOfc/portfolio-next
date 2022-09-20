@@ -1,9 +1,3 @@
-import { isNull } from 'util';
-import type { RefObject } from 'react';
-
-import { useRef } from 'react';
-import useScroll from '@hooks/useScroll';
-
 import { Grid, Heading } from '@chakra-ui/react';
 import SafeLink from '@components/SafeLink';
 import Translate from '@components/Translate';
@@ -16,43 +10,15 @@ export default ContactMe;
 export type { ContactMeProps };
 
 type ContactMeProps = {
-   pageRef?: RefObject<HTMLElement>;
    id: HomeLayout<'contactMe'>['id'];
    translation: {
       contactBar: ContactBarProps['translation'];
    } & HomeLayout<'contactMe'>['translation'];
 };
 
-function ContactMe({ id, pageRef, translation, ...props }: ContactMeProps) {
-   const selfRef = useRef<HTMLDivElement>(null);
-   useScroll({
-      axis: 'y',
-      target: pageRef,
-      call({ currentPercentageInDecimalScrollY }) {
-         const thisSection = selfRef.current;
-
-         if (isNull(thisSection)) {
-            throw new Error('No `KeepIn` found!');
-         }
-
-         if (currentPercentageInDecimalScrollY === 1) {
-            thisSection.style.zIndex = 'unset';
-            return;
-         }
-
-         if (currentPercentageInDecimalScrollY > 0.5) {
-            thisSection.style.zIndex = '-1';
-            return;
-         }
-
-         thisSection.style.zIndex = '-2';
-      },
-      callDeps: [],
-   });
-
+function ContactMe({ id, translation, ...props }: ContactMeProps) {
    return (
       <Grid
-         ref={selfRef}
          as='section'
          id={id}
          data-limited-box='expanded'
@@ -63,11 +29,8 @@ function ContactMe({ id, pageRef, translation, ...props }: ContactMeProps) {
          bgColor='orange.200'
          pos='relative'
          pointerEvents='none'
-         zIndex={-2}
+         clipPath='inset(0)'
          sx={{
-            '&:focus-within > *': {
-               pos: 'absolute',
-            },
             '& > *': {
                pos: 'fixed',
                inset: 0,

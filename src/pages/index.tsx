@@ -69,11 +69,35 @@ function Home({ projects, translation }: HomeProps) {
             as='main'
             data-crop='viewport'
             data-snapped-scroll='y'
+            // TODO: FIX ON FIREFOX
+            // FORCE SCROLL ON FOCUS BY HIDING OTHERS ELEMENTS
+            sx={{
+               '&[data-focus-trigger]:not([data-focus-trigger="true"])': {
+                  '&:focus-within > *:not(:focus-within)': {
+                     display: 'none',
+                  },
+               },
+            }}
+            onFocus={() => {
+               const self = pageRef.current;
+
+               if (isNull(self)) {
+                  throw new Error(`No \`pageRef\` found!`);
+               }
+
+               if (navigator.userAgent.includes('Chrome') === false) {
+                  return;
+               }
+
+               self.dataset.focusTrigger = 'false';
+               requestAnimationFrame(() => {
+                  self.dataset.focusTrigger = 'true';
+               });
+            }}
          >
             <Intro
                id={topicIds[0]}
                data-snapped-item
-               pageRef={pageRef}
                translation={{
                   ...translation.intro,
                   contactBar: translation.partials.contactBar,
@@ -98,7 +122,6 @@ function Home({ projects, translation }: HomeProps) {
             <ContactMe //
                id={topicIds[4]}
                data-snapped-item
-               pageRef={pageRef}
                translation={{
                   ...translation.contactMe,
                   contactBar: translation.partials.contactBar,
