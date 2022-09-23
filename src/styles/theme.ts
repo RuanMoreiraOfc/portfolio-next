@@ -118,6 +118,13 @@ const theme = extendTheme({
         _focusVisible: {
           outlineStyle: 'auto',
         },
+
+        '@media screen and (prefers-reduced-motion)': {
+          '&, &::before, &::after': {
+            transition: 'none !important',
+            animationDuration: '0s !important',
+          },
+        },
       },
       "a, label, button, [role='button'], [tabindex]:not([tabindex^='-'])": {
         cursor: 'pointer',
