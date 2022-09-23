@@ -69,15 +69,6 @@ function Home({ projects, translation }: HomeProps) {
             as='main'
             data-crop='viewport'
             data-snapped-scroll='y'
-            // TODO: FIX ON FIREFOX
-            // FORCE SCROLL ON FOCUS BY HIDING OTHERS ELEMENTS
-            sx={{
-               '&[data-focus-trigger]:not([data-focus-trigger="true"])': {
-                  '&:focus-within > *:not(:focus-within)': {
-                     display: 'none',
-                  },
-               },
-            }}
             onFocus={({ target }) => {
                const self = pageRef.current;
 
@@ -85,18 +76,23 @@ function Home({ projects, translation }: HomeProps) {
                   throw new Error(`No \`pageRef\` found!`);
                }
 
-               if (navigator.userAgent.includes('Chrome') === false) {
+               const item = Array.from(
+                  self.querySelectorAll<HTMLElement>(
+                     ':scope > [data-snapped-item]',
+                  ),
+               ).find((e) => e.contains(target));
+
+               if (item === undefined) {
+                  // `self` is focused by tab ( FIREFOX DEFAULT BEHAVIOR )
                   return;
                }
 
-               if (document.getElementById(topicIds[3])?.contains(target)) {
+               if (item.offsetHeight > self.offsetHeight) {
+                  self.scrollTop = item.offsetTop + target.offsetTop * 0.5;
                   return;
                }
 
-               self.dataset.focusTrigger = 'false';
-               requestAnimationFrame(() => {
-                  self.dataset.focusTrigger = 'true';
-               });
+               self.scrollTop = item.offsetTop;
             }}
          >
             <Intro
