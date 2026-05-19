@@ -1,125 +1,64 @@
+import { NextRequest, NextResponse } from 'next/server';
+
 import { filterRequestedLanguageApi } from '@lib/filterRequestedLanguageApi';
 
-import type { IncomingHttpHeaders } from 'http';
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+export { middleware };
 
-export { middleware, config };
+const PUBLIC_FILE = /\.(.*)$/;
 
-async function middleware(req: NextRequest) {
-  const headers: IncomingHttpHeaders = Object.fromEntries(
-    req.headers.entries(),
-  );
+async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-  const dest = headers['sec-fetch-dest'] as
-    | 'image'
-    | 'document'
-    | 'script'
-    | 'empty';
-
-  const currentURL = req.nextUrl;
-
+  // Ignore Next internals and static files
   if (
-    dest !== 'document' ||
-    currentURL.pathname.includes('.') ||
-    currentURL.origin.endsWith('vercel.app') ||
-    ['/_next', '/api'].some((e) => currentURL.pathname.startsWith(e))
+    pathname.startsWith('/_next') ||
+    pathname.includes('/api/') ||
+    PUBLIC_FILE.test(pathname)
   ) {
-    const response = NextResponse.next();
-    return response;
+    return NextResponse.next();
   }
 
-  const {
-    lang: langFromBrowser,
-    defaults: { langs: locales },
-  } = filterRequestedLanguageApi({ headers });
+  const url = request.nextUrl.clone();
 
-  const currentLocation =
-    (headers[':authority:'] as string | undefined) ?? headers.host;
+  const hostname = url.hostname;
 
-  if (currentLocation === undefined) {
-    const response = NextResponse.next();
-    return response;
+  const domainPartsCount = Number(process.env.DOMAIN_PARTS_COUNT ?? 2);
+
+  const hostnameParts = hostname.split('.');
+
+  const baseDomain = hostnameParts
+    .slice(-domainPartsCount)
+    .join('.');
+
+  const currentSubdomain =
+    hostnameParts.length > domainPartsCount
+      ? hostnameParts.slice(0, -domainPartsCount).join('.')
+      : '';
+
+  const preferredLang = filterRequestedLanguageApi({
+    currentLanguage: currentSubdomain,
+    acceptLanguageHeader:
+      request.headers.get('accept-language') ?? '',
+  });
+
+  // Already on correct language subdomain
+  if (currentSubdomain === preferredLang) {
+    return NextResponse.next();
   }
 
-  const [subdomain] = currentLocation
-    ?.split('.')
-    .reduce((acc, e, i, { length: parts_count }) => {
-      if (parts_count <= Number(process.env!.DOMAIN_PARTS_COUNT)) {
-        acc.push('');
-      }
+  // Preserve localhost behavior
+  if (
+    hostname.includes('localhost') ||
+    hostname.includes('127.0.0.1')
+  ) {
+    url.hostname = hostname;
+    url.port = url.port || '3000';
 
-      acc.push(e);
-      return acc;
-    }, [] as string[]) ?? [''];
-  const { origin, pathname, search, hash, locale, searchParams } = currentURL;
-  const langFromParam = String(searchParams.getAll('locale'));
-  const langFromPathname = req.url
-    .replace(origin, '')
-    .replace(pathname, '')
-    .replace(search, '')
-    .replace(hash, '');
-
-  const preferredLang = locales.includes(subdomain)
-    ? locales.includes(langFromParam)
-      ? langFromParam
-      : subdomain
-    : langFromParam || langFromPathname || langFromBrowser;
-
-  const fillURL = (baseURL: URL | string, ...pathnames: string[]) => {
-    searchParams.delete('locale');
-
-    const newUrl = new URL(
-      hash,
-      new URL(
-        currentURL.search,
-        new URL(pathnames.map((e) => e.replace(/\//, '')).join('/'), baseURL),
-      ),
-    );
-
-    return newUrl;
-  };
-
-  const originWithLangInSubdomain = origin
-    .replace(`://${subdomain}`, `://`)
-    .replace(`://`, `://${preferredLang}.`)
-    .replace('..', '.');
-
-  const redirectDestination = fillURL(originWithLangInSubdomain, pathname);
-  const rewriteDestination = fillURL(
-    originWithLangInSubdomain,
-    preferredLang,
-    pathname,
-  );
-
-  if (locales.includes(langFromParam)) {
-    const response = NextResponse.redirect(redirectDestination, {
-      status: 308,
-    });
-    return response;
+    return NextResponse.next();
   }
 
-  if (locales.includes(subdomain) === false) {
-    const response = NextResponse.redirect(redirectDestination);
-    return response;
-  }
+  // Redirect to language subdomain
+  url.hostname = `${preferredLang}.${baseDomain}`;
 
-  if (langFromPathname !== '') {
-    const response = NextResponse.redirect(redirectDestination, {
-      status: 308,
-    });
-    return response;
-  }
-
-  if (subdomain !== locale) {
-    const response = NextResponse.rewrite(rewriteDestination);
-    return response;
-  }
-
-  const response = NextResponse.next();
-  return response;
+  return NextResponse.redirect(url);
 }
-
-const config = {
-  matcher: ['/:path:*'],
-};
