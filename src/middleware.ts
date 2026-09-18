@@ -35,11 +35,20 @@ async function middleware(request: NextRequest) {
       ? hostnameParts.slice(0, -domainPartsCount).join('.')
       : '';
 
-  const preferredLang = filterRequestedLanguageApi({
-    currentLanguage: currentSubdomain,
-    acceptLanguageHeader:
-      request.headers.get('accept-language') ?? '',
+  const {
+    lang: langFromBrowser,
+    defaults: { langs: locales },
+  } = filterRequestedLanguageApi({
+    headers: {
+      'accept-language':
+        request.headers.get('accept-language') ?? undefined,
+    },
   });
+
+  // Keep an explicit (valid) language subdomain, otherwise use the browser one
+  const preferredLang = locales.includes(currentSubdomain)
+    ? currentSubdomain
+    : langFromBrowser;
 
   // Already on correct language subdomain
   if (currentSubdomain === preferredLang) {
