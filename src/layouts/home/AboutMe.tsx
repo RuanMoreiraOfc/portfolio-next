@@ -10,11 +10,10 @@ export type { AboutMeProps };
 
 type AboutMeProps = {} & HomeLayout<'aboutMe'>;
 
-const myAge =
-   new Date(0).getFullYear() -
-   new Date(
-      new Date('02/07/2003 UTC 3:00').valueOf() - Date.now(),
-   ).getFullYear();
+// UTC only: local-time getters differ between server and client timezones
+// (and `new Date(0).getFullYear()` is 1969 west of UTC), breaking hydration
+const BIRTH_DATE = Date.UTC(2003, 1, 7, 3);
+const myAge = new Date(Date.now() - BIRTH_DATE).getUTCFullYear() - 1970;
 
 function AboutMe({ id, translation, ...props }: AboutMeProps) {
    return (
