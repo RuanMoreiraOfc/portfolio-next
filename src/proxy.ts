@@ -7,11 +7,14 @@ export { proxy };
 const PUBLIC_FILE = /\.(.*)$/;
 
 async function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, buildId } = request.nextUrl;
 
-  // Ignore Next internals and static files
+  // Ignore Next internals, API routes and static files. `_next/data` requests
+  // are normalized to their page path (only `buildId` gives them away) and
+  // already carry the locale, so they must pass through untouched
   if (
     pathname.startsWith('/_next') ||
+    buildId !== undefined ||
     pathname.includes('/api/') ||
     PUBLIC_FILE.test(pathname)
   ) {
@@ -45,29 +48,49 @@ async function proxy(request: NextRequest) {
     },
   });
 
-  // Keep an explicit (valid) language subdomain, otherwise use the browser one
-  const preferredLang = locales.includes(currentSubdomain)
-    ? currentSubdomain
-    : langFromBrowser;
+  const isLocalhost =
+    hostname.includes('localhost') || hostname.includes('127.0.0.1');
 
-  // Already on correct language subdomain
-  if (currentSubdomain === preferredLang) {
-    return NextResponse.next();
+  // i18n is configured, so there is always a default locale
+  const defaultLocale = url.defaultLocale as string;
+
+  // `?locale=xx` (locale picker) or a `/xx/...` pathname is an explicit choice
+  const langFromParam = url.searchParams.get('locale') ?? '';
+  const langFromPathname = url.locale === defaultLocale ? '' : url.locale;
+  const explicitLang = [langFromParam, langFromPathname].find((lang) =>
+    locales.includes(lang),
+  );
+
+  // Otherwise keep a (valid) language subdomain, or fall back to the browser one
+  const preferredLang =
+    explicitLang ??
+    (locales.includes(currentSubdomain) ? currentSubdomain : langFromBrowser);
+
+  url.searchParams.delete('locale');
+
+  // No subdomains on localhost: just serve the preferred language
+  if (isLocalhost) {
+    url.locale = preferredLang;
+
+    return NextResponse.rewrite(url);
   }
 
-  // Preserve localhost behavior
-  if (
-    hostname.includes('localhost') ||
-    hostname.includes('127.0.0.1')
-  ) {
-    url.hostname = hostname;
-    url.port = url.port || '3000';
+  // Already on the right language subdomain: serve that locale's page
+  if (currentSubdomain === preferredLang && explicitLang === undefined) {
+    if (url.locale === preferredLang) {
+      return NextResponse.next();
+    }
 
-    return NextResponse.next();
+    url.locale = preferredLang;
+
+    return NextResponse.rewrite(url);
   }
 
-  // Redirect to language subdomain
+  // Move to the language subdomain, dropping any locale hint from the URL
+  url.locale = defaultLocale;
   url.hostname = `${preferredLang}.${baseDomain}`;
 
-  return NextResponse.redirect(url);
+  return NextResponse.redirect(url, {
+    status: explicitLang === undefined ? 307 : 308,
+  });
 }
