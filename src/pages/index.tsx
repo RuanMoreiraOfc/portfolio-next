@@ -8,7 +8,7 @@ import type {
 } from '@services/github/queries/getPortfolioRepos';
 import { getPortfolioRepos } from '@services/github/queries/getPortfolioRepos';
 
-import { isNull } from 'util';
+import { isNull } from '@lib/is';
 import type { NextPage, GetStaticProps } from 'next';
 
 import { useId, useRef } from 'react';

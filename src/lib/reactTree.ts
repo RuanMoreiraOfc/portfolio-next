@@ -4,7 +4,7 @@ import {
   isNullOrUndefined,
   isNumber,
   isString,
-} from 'util';
+} from '@lib/is';
 import type {
   FunctionComponent,
   ReactElement,
@@ -109,6 +109,7 @@ const manipulateTree = (manipulate: ManipulateCallbackOrOptions) => {
         isBoolean(child) ||
         isReactFragment(child) ||
         isNullOrUndefined(child) ||
+        typeof child !== 'object' ||
         'props' in child === false
       ) {
         return [];

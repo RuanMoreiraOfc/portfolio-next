@@ -100,7 +100,7 @@ function ProjectCard({
          >
             {thumbnail ? (
                <Image
-                  layout='fill'
+                  fill
                   src={thumbnail}
                   alt={`${name} screenshot`}
                />

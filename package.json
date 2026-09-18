@@ -2,12 +2,15 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "postinstall": "yarn gen:theme-typings",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "gen:theme-typings": "chakra-cli tokens src/styles/theme.ts"
   },
   "dependencies": {
@@ -17,25 +20,25 @@
     "@emotion/styled": "^11",
     "framer-motion": "^6",
     "graphql": "^16.5.0",
-    "markdown-to-jsx": "^7.1.7",
+    "markdown-to-jsx": "^7.7.17",
     "marked": "^4.0.18",
-    "next": "12.2.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "16.3.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-icons": "^4.4.0",
     "sharp": "^0.30.7",
     "swr": "^1.3.0"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^2.1.2",
-    "@svgr/webpack": "^6.3.1",
+    "@svgr/webpack": "^8.1.0",
     "@types/marked": "^4.0.3",
-    "@types/node": "^18.0.6",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
+    "@types/node": "^22.20.3",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
     "@types/sharp": "^0.30.4",
-    "eslint": "8.20.0",
-    "eslint-config-next": "12.2.2",
-    "typescript": "^4.7.4"
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.3.5",
+    "typescript": "^5.9.3"
   }
 }

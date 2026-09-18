@@ -1,4 +1,4 @@
-import { isFunction, isNumber } from 'util';
+import { isFunction, isNumber } from '@lib/is';
 import type { RefObject } from 'react';
 
 import { useRef, useEffect } from 'react';

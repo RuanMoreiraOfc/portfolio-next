@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { filterRequestedLanguageApi } from '@lib/filterRequestedLanguageApi';
 
-export { middleware };
+export { proxy };
 
 const PUBLIC_FILE = /\.(.*)$/;
 
-async function middleware(request: NextRequest) {
+async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Ignore Next internals and static files

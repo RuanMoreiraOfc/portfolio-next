@@ -46,8 +46,9 @@ function AboutMe({ id, translation, ...props }: AboutMeProps) {
                   width={320}
                   height={425}
                   alt={translation.imageAlt}
-                  layout='intrinsic'
                   style={{
+                     maxWidth: '100%',
+                     height: 'auto',
                      borderRadius: '90%/35%',
                      filter: 'contrast(1.2)',
                   }}

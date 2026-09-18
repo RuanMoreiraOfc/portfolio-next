@@ -1,4 +1,4 @@
-import { isNull, isString, isUndefined } from 'util';
+import { isNull, isString, isUndefined } from '@lib/is';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default Handler;

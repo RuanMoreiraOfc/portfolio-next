@@ -44,9 +44,8 @@ function Intro({ id, translation, ...props }: IntroProps) {
                blurDataURL={blurDataURL}
                alt={translation.imageAlt}
                sizes='120vw'
-               layout='fill'
-               objectFit='cover'
-               objectPosition='22.5% 35%'
+               fill
+               style={{ objectFit: 'cover', objectPosition: '22.5% 35%' }}
             />
          </Box>
          <Grid

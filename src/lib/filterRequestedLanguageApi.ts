@@ -1,4 +1,4 @@
-import nextConfig from 'next.config';
+import i18n from 'i18n.config';
 
 import { r } from '@lib/regex';
 
@@ -6,8 +6,8 @@ import type { NextApiRequest } from 'next';
 
 export { filterRequestedLanguageApi };
 
-const locales = nextConfig.i18n!.locales;
-const defaultLocale = nextConfig.i18n!.defaultLocale.replace(/fallback-/, '');
+const locales = i18n.locales;
+const defaultLocale = i18n.defaultLocale.replace(/fallback-/, '');
 
 const REGEX_IGNORE_IN_LANGUAGE = r
   .withCache({ separator: /,?\s?/, union: /|/ })
@@ -24,7 +24,7 @@ const REGEX_IGNORE_IN_LANGUAGE = r
 
 const filterRequestedLanguageApi = (
   req: Pick<NextApiRequest, 'headers'>,
-  acceptedLanguages: string[] = locales,
+  acceptedLanguages: readonly string[] = locales,
   fallback: string = defaultLocale,
 ) => {
   const requestedLanguages = req.headers['accept-language'] || undefined;

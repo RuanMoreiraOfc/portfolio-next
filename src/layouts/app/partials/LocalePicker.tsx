@@ -1,6 +1,6 @@
 import WorldMapImg from '@a-images/world-map.jpg';
 
-import { isNull } from 'util';
+import { isNull } from '@lib/is';
 import type { KeyboardEventHandler, KeyboardEvent, FocusEvent } from 'react';
 import { keyframes } from '@chakra-ui/react';
 

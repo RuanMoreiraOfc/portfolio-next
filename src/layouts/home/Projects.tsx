@@ -1,8 +1,8 @@
-import { isNull, isNumber, isUndefined } from 'util';
+import { isNull, isNumber, isUndefined } from '@lib/is';
 
 import type { KeyboardEventHandler, MouseEvent } from 'react';
 
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback } from 'react';
 
 import { Fragment } from 'react';
 import { Grid, Heading, List, ListItem, Box } from '@chakra-ui/react';
@@ -43,17 +43,15 @@ function Projects({
    const carouselRef = useRef<HTMLOListElement>(null);
    const [hasChangeOnce, setHasChangeOnce] = useState(false);
    const [carouselCanScroll, setCarouselCanScroll] = useState(true);
-   const [statedTags, setStatedTags] = useState<Record<string, TagState>>(
+   const [statedTags, setStatedTags] = useState<Record<string, TagState>>(() =>
       generateStatedTagsState(btnToggleAllTranslation, projects),
    );
 
-   useEffect(() => {
-      if (!isUndefined(statedTags[btnToggleAllTranslation])) {
-         return;
-      }
-
+   // The "toggle all" tag is keyed by its translation, so a locale switch
+   // must rebuild the tags state (adjusting state while rendering)
+   if (isUndefined(statedTags[btnToggleAllTranslation])) {
       setStatedTags(generateStatedTagsState(btnToggleAllTranslation, projects));
-   }, [statedTags, btnToggleAllTranslation, projects]);
+   }
 
    // ***
 

@@ -1,4 +1,4 @@
-import { isNull } from 'util';
+import { isNull } from '@lib/is';
 import type { MouseEventHandler, RefObject } from 'react';
 
 import { useRef, useState, useCallback } from 'react';

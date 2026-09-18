@@ -1,6 +1,6 @@
 import { filterRequestedLanguageApi } from '@lib/filterRequestedLanguageApi';
 
-import { isUndefined } from 'util';
+import { isUndefined } from '@lib/is';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default Handler;

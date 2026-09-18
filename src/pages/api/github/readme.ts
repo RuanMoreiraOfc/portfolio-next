@@ -7,7 +7,7 @@ import type {
 } from '@services/github/queries/getReadme';
 import { getReadme } from '@services/github/queries/getReadme';
 
-import { isString, isUndefined } from 'util';
+import { isString, isUndefined } from '@lib/is';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { marked } from 'marked';
 

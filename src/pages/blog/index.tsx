@@ -3,7 +3,7 @@ import CookingSvg from '@a-icons/programming.svg';
 
 import { translate } from '@lib/translatePage';
 
-import { isNull } from 'util';
+import { isNull } from '@lib/is';
 import type { GetStaticProps, NextPage } from 'next';
 
 import { Grid, Heading, Icon } from '@chakra-ui/react';

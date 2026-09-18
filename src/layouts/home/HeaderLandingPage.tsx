@@ -1,4 +1,4 @@
-import { isNull } from 'util';
+import { isNull } from '@lib/is';
 import type { RefObject } from 'react';
 
 import { useRef } from 'react';

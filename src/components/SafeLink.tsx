@@ -1,7 +1,8 @@
 import type { OmitDistributive } from '@~types/omitDistributive';
 
-import { isString } from 'util';
+import { isString } from '@lib/is';
 import type { ReactNode, FunctionComponent } from 'react';
+import { forwardRef } from 'react';
 import type { LinkProps as NextLinkProps } from 'next/link';
 import NextLink from 'next/link';
 import type { LinkProps as ChakraLinkProps } from '@chakra-ui/react';
@@ -20,6 +21,25 @@ type ChakraLinkPropsFiltered = OmitDistributive<
    ChakraLinkProps,
    'as' | 'href' | 'children'
 >;
+
+type MaskedNextLinkProps = Omit<NextLinkProps, 'as'> & {
+   toMask?: NextLinkProps['as'];
+};
+
+type TagProps = ChakraLinkPropsFiltered &
+   Pick<MaskedNextLinkProps, 'href' | 'toMask' | 'locale' | 'replace'> & {
+      as: FunctionComponent<MaskedNextLinkProps>;
+      children: ReactNode;
+   };
+
+// `next/link` renders its own `<a>` since v13, so it must be the root element
+// (through Chakra's `as`). Its `as` (url mask) prop collides with Chakra's,
+// hence this thin wrapper exposing it as `toMask`.
+const MaskedNextLink = forwardRef<HTMLAnchorElement, MaskedNextLinkProps>(
+   function MaskedNextLink({ toMask, ...props }, ref) {
+      return <NextLink ref={ref} as={toMask} {...props} />;
+   },
+);
 
 type SafeLinkDefaultProps = {
    shouldRemoveIcon: boolean;
@@ -106,22 +126,22 @@ function SafeLink({
 
    const Tag = (restLinkProps.colorScheme
       ? ChakraButton
-      : ChakraLink) as unknown as FunctionComponent<ChakraLinkProps>;
+      : ChakraLink) as unknown as FunctionComponent<TagProps>;
 
    return (
-      <NextLink //
+      <Tag
+         as={MaskedNextLink}
          href={to}
-         as={toMask}
+         toMask={toMask}
          locale={locale ?? false}
          replace={replace}
-         passHref
+         display='inline-flex'
+         {...linkProps}
       >
-         <Tag as='a' display='inline-flex' {...linkProps}>
-            {children}
-            {shouldRemoveIcon === false && isExternal === true && (
-               <ChakraIcon as={MdOpenInNew} ml='0.2em' />
-            )}
-         </Tag>
-      </NextLink>
+         {children}
+         {shouldRemoveIcon === false && isExternal === true && (
+            <ChakraIcon as={MdOpenInNew} ml='0.2em' />
+         )}
+      </Tag>
    );
 }
