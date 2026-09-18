@@ -10,10 +10,12 @@ async function proxy(request: NextRequest) {
   const { pathname, buildId } = request.nextUrl;
 
   // Ignore Next internals, API routes and static files. `_next/data` requests
-  // are normalized to their page path (only `buildId` gives them away) and
-  // already carry the locale, so they must pass through untouched
+  // are normalized to their page path before getting here (on Vercel even
+  // `buildId` is gone, only the `x-nextjs-data` header remains) and already
+  // carry the locale, so they must pass through untouched
   if (
     pathname.startsWith('/_next') ||
+    request.headers.get('x-nextjs-data') !== null ||
     buildId !== undefined ||
     pathname.includes('/api/') ||
     PUBLIC_FILE.test(pathname)
